@@ -64,7 +64,6 @@ test("Radio button selection", async ({ page }) => {
 test.describe("Web tables automation tests", () => {
   test("Search field results", async ({ page }) => {
     await page.getByRole("link", { name: "Web Tables" }).click();
-
   });
 
   test("Buttons testing", async ({ page }) => {
@@ -124,14 +123,25 @@ test.describe("Web tables automation tests", () => {
     // Mobile Phone Number - fill in with 10 digits !
     await page
       .getByRole("textbox", { name: "Mobile Number" })
-      .pressSequentially("01206524111", { delay: 500 });
+      .pressSequentially("01206524111", { delay: 250 });
 
     // DATE PICKER !!!....used the playwright tool " Record new " to record the clicks !
     await page.locator("#dateOfBirthInput").click();
-    await page.getByRole('combobox').nth(1).selectOption('1983');
-    await page.getByRole('gridcell', { name: 'Choose Monday, October 10th,' }).click();
+    await page.getByRole("combobox").nth(1).selectOption("1983");
+    await page.getByRole("gridcell", { name: "Choose Monday, October 10th," });
 
     // Subjects - enter some text
-    
+    await page.locator(".subjects-auto-complete__input-container").click();
+    await page
+      .locator("#subjectsInput").pressSequentially("My subjects are Maths and English", { delay: 250 });
+
+    // Hobbies Check boxes selectors, select and DESELECT to ensure both types of functionality work !
+    await page.getByRole("checkbox", { name: "Sports" }).check();
+    await page.getByRole("checkbox", { name: "Reading" }).check();
+    await page.getByRole("checkbox", { name: "Music" }).check();
+    await page.getByRole("checkbox", { name: "Music" }).uncheck();
+    await page.getByRole("checkbox", { name: "Reading" }).uncheck();
+    await page.getByRole("checkbox", { name: "Sports" }).uncheck();
+    await page.getByRole("checkbox", { name: "Reading" }).check();
   });
 });
